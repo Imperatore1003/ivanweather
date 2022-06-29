@@ -20,8 +20,33 @@ def after_request(response):
 
 @app.route("/")
 def index():
-    return "Hello World!"
+    """Show the homepage of IvanWeather"""
 
+    init()
+
+    cities = recentCities(session["history"])
+
+    return render_template("index.html", cities=cities)
+
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    """Show results of search"""
+
+    init()
+    
+    cities = recentCities(session["history"])
+    city = request.args.get("city")
+
+    if city == "noRecentCities":
+        return redirect("/")
+
+    print(city)
+
+    return render_template("search.html", city=city, cities=cities)
+
+def init():
+    if session.get("history") == None:
+        session["history"] = []
 
 if __name__ == "__main__":
     app.run()
