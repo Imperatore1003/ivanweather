@@ -2,6 +2,8 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 
+import json
+
 from functions import recentCities
 
 app = Flask(__name__)
@@ -40,13 +42,13 @@ def search():
     if city == "noRecentCities":
         return redirect("/")
 
-    print(city)
+    session["history"] = str(json.loads(session["history"]).append(city))
 
     return render_template("search.html", city=city, cities=cities)
 
 def init():
     if session.get("history") == None:
-        session["history"] = []
+        session["history"] = "[]"
 
 if __name__ == "__main__":
     app.run()

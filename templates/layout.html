@@ -14,7 +14,7 @@
     <body>
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">IvanWeather</a>
+                <a class="navbar-brand" href="/">IvanWeather</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -29,13 +29,13 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 {% for city in cities %}
-                                <li><a class="dropdown-item" href='/search?city={{ city["url"] }}'>{{ city["name"]}}</a></li>
+                                    <li><a class="dropdown-item" href='/search?city={{ city["url"] }}'>{{ city["name"]}}</a></li>
                                 {% endfor %}
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search" method="post" action="/search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="d-flex" role="search" method="get" action="/search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="city">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>
