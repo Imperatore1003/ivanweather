@@ -55,4 +55,4 @@ if __name__ == "__main__":
 
 @app.route("/.well-known/acme-challenge/OKitNQ-pFR_TSZw-sNbfUIDH6cPWggl_UFt3tMIV8Jw")
 def acme_challenge():
-    return render_template("ssl")
+    return render_template("ssl.html")
