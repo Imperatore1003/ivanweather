@@ -1,7 +1,6 @@
 import urllib.parse
 import json
 import http
-import requests
 
 def recentCities(cities):
     """Returns a list of recent cities"""
@@ -18,7 +17,10 @@ def recentCities(cities):
     
     return [{"name": "No recent cities", "url": "noRecentCities"}]
 
-def api():
+def api(city, cord1 = 0, cord2 = 0, mode = 0):
+
+    return '{"coord":{"lon":8.3181,"lat":40.5589},"weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01n"}],"base":"stations","main":{"temp":78.89,"feels_like":78.89,"temp_min":78.89,"temp_max":78.89,"pressure":1016,"humidity":89},"visibility":10000,"wind":{"speed":1.14,"deg":0},"clouds":{"all":0},"dt":1658002619,"sys":{"type":1,"id":6717,"country":"IT","sunrise":1657944556,"sunset":1657997751},"timezone":7200,"id":3183284,"name":"Alghero","cod":200}'
+
     conn = http.client.HTTPSConnection("community-open-weather-map.p.rapidapi.com")
 
     headers = {
@@ -26,9 +28,12 @@ def api():
         'X-RapidAPI-Host': "community-open-weather-map.p.rapidapi.com"
         }
 
-    conn.request("GET", "/weather?q=Alghero%2Cit&callback=test&lang=en&units=metric&mode=xml", headers=headers)
+    if mode == 0:
+        conn.request("GET", f"/weather?q={city}&lang=en&units=metric", headers=headers)
+    elif mode == 1:
+        conn.request("GET", f"/weather?lat={cord1}&lon={cord2}&lang=en&units=metric", headers=headers)
 
     res = conn.getresponse()
     data = res.read()
 
-    print(data.decode("utf-8"))
+    return str(data.decode("utf-8"))

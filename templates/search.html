@@ -1,9 +1,21 @@
 {% extends "layout.html" %}
 
 {% block title%}
-    Search {{ city }}
+    Search {{ city["name"] }}
 {% endblock %}
 
 {% block content %}
-    {{ city }}
+    Name: {{ city["name"] }}<br>
+    Country: {{ city["sys"]["country"] }}<br>
+    Temperature: {{ city["main"]["temp"] }}°<br>
+    Feels like: {{ city["main"]["feels_like"] }}°<br>
+    Max: {{ city["main"]["temp_max"] }}°<br>
+    Min: {{ city["main"]["temp_min"] }}°<br>
+    Humidity: {{ city["main"]["humidity"] }}%<br>
+    Wind speed: {{ city["wind"]["speed"] }} mph<br>
+    Main: {{ city["weather"][0]["main"] }}<br>
+    Description: {{ city["weather"][0]["description"] }}<br>
+    Pressure: {{ city["main"]["pressure"] }} in<br>
+    Sunrise: {{ city["sys"]["sunrise"] }}<br>
+    Sunset: {{ city["sys"]["sunset"] }}
 {% endblock %}

@@ -3,8 +3,9 @@ from flask_session import Session
 from tempfile import mkdtemp
 
 import json
+from datetime import datetime
 
-from functions import recentCities
+from functions import recentCities, api
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -31,31 +32,37 @@ def after_request(response):
 def index():
     """Show the homepage of IvanWeather"""
 
-    init()
+    # init()
 
-    cities = recentCities(session["history"])
+    # cities = recentCities(session["history"])
 
-    return render_template("index.html", cities=cities)
+    return render_template("index.html")
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
     """Show results of search"""
 
-    init()
+    # init()
     
-    cities = recentCities(session["history"])
-    city = request.args.get("city")
+    # cities = recentCities(session["history"])
+    cityName = request.args.get("city")
 
-    if city == "noRecentCities":
-        return redirect("/")
+    result = api(cityName)
+    city = json.loads(result)
+    city["main"]["pressure"] = round(city["main"]["pressure"] / 33.864 , 2)
+    city["sys"]["sunrise"] = datetime.fromtimestamp(int(city["sys"]["sunrise"])).strftime('%H:%M:%S')
+    city["sys"]["sunset"] = datetime.fromtimestamp(int(city["sys"]["sunset"])).strftime('%H:%M:%S')
 
-    session["history"] = str(json.loads(session["history"]).append(city))
+    # if city == "noRecentCities":
+    #     return redirect("/")
 
-    return render_template("search.html", city=city, cities=cities)
+    # session["history"] = str(json.loads(session["history"]).append(city))
 
-def init():
-    if session.get("history") == None:
-        session["history"] = "[]"
+    return render_template("search.html", city=city)
+
+# def init():
+#     if session.get("history") == None:
+#         session["history"] = "[]"
 
 if __name__ == "__main__":
     app.run()
