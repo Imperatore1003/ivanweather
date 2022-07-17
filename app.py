@@ -72,6 +72,14 @@ def robots():
 def sitemap():
     """Sitemap"""
     return render_template("sitemap.xml")
+@app.route("/manifest.json")
+def manifest():
+    """Manifest"""
+    return render_template("manifest.json")
+@app.route("/browserconfig.xml")
+def browserconfig():
+    """Browserconfig"""
+    return render_template("browserconfig.xml")
 
 # def init():
 #     if session.get("history") == None:
