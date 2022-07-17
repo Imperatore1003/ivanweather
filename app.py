@@ -63,8 +63,15 @@ def search():
 @app.route("/google08e23da205bdc745.html")
 def verification():
     """Verify Google Search Console"""
-
     return render_template("google08e23da205bdc745.html")
+@app.route("/robots.txt")
+def robots():
+    """robots.txt"""
+    return render_template("robots.txt")
+@app.route("/sitemap.xml")
+def sitemap():
+    """Sitemap"""
+    return render_template("sitemap.xml")
 
 # def init():
 #     if session.get("history") == None:
