@@ -60,6 +60,12 @@ def search():
 
     return render_template("search.html", city=city)
 
+@app.route("/google08e23da205bdc745.html")
+def verification():
+    """Verify Google Search Console"""
+
+    return render_template("google08e23da205bdc745.html")
+
 # def init():
 #     if session.get("history") == None:
 #         session["history"] = "[]"
