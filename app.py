@@ -1,5 +1,6 @@
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
+from flask_compress import Compress
 from tempfile import mkdtemp
 
 import json
@@ -8,6 +9,7 @@ from datetime import datetime
 from functions import recentCities, api
 
 app = Flask(__name__)
+Compress(app)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
