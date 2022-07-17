@@ -3,3 +3,4 @@ gunicorn
 Flask-Session
 Flask-Compress
 requests
+Waitress

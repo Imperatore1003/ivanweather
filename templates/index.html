@@ -11,4 +11,52 @@
 
 {% block content %}
     <h1>Check the weather in your location simply - IvanWeather</h1>
+
+    {% if getCords == 1%}
+        <h3 id="status"></h3>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+        <script>
+            let latitude = 0;
+            let longitude = 0;
+
+            function send(latitude, longitude) {
+                let dict_values = {latitude, longitude} //Pass the javascript variables to a dictionary.
+                let s = JSON.stringify(dict_values); // Stringify converts a JavaScript object or value to a JSON string
+                $.ajax({
+                    url:"/",
+                    type:"POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(s),
+                    complete: function (data) {
+                        window.location.href = "/";
+                    }
+                });
+            }
+
+            function success(position) {
+                latitude = position.coords.latitude;
+                longitude = position.coords.longitude;
+                send(latitude, longitude)
+                status('Latitude: ' + latitude + ' °, Longitude: ' + longitude + ' °');
+            }
+
+            function error() {
+                status('Unable to retrieve your location');
+            }
+
+            function status(status) {
+                document.getElementById('status').innerHTML = "<p>" + status + "</p>";
+            }
+
+            if (!navigator.geolocation) {
+                status('Geolocation is not supported by your browser');
+            } else {
+                status("Getting your location...");
+                navigator.geolocation.getCurrentPosition(success, error);
+            }
+        </script>
+    {% else %}
+        <h3>Latitude: {{ latitudine }} °, Longitude: {{ longitudine }} °</h3>
+    {% endif %}
 {% endblock %}

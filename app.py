@@ -1,10 +1,10 @@
+import re
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from flask_compress import Compress
 from tempfile import mkdtemp
 
 import json
-from datetime import datetime
 
 from functions import recentCities, api
 
@@ -30,35 +30,39 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
     """Show the homepage of IvanWeather"""
+    if request.method == "POST":
+        output = request.get_json()
+        result = str(json.loads(output))
 
-    # init()
+        print(result)
 
-    # cities = recentCities(session["history"])
+        session["cords"] = result
 
-    return render_template("index.html")
+        return redirect("/")
+    
+    elif request.method == "GET":
+
+        # city = api(0, cord1, cord2, 1)
+
+        if session.get("cords") is None:
+            return render_template("index.html", getCords=1)
+        else:
+            cords = json.loads(session["cords"].replace("'", '"'))
+            latitudine = cords["latitude"]
+            longitudine = cords["longitude"]
+
+            return render_template("index.html", getCords=0, latitudine=latitudine, longitudine=longitudine)
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
     """Show results of search"""
 
-    # init()
-    
-    # cities = recentCities(session["history"])
     cityName = request.args.get("city")
 
-    result = api(cityName)
-    city = json.loads(result)
-    city["main"]["pressure"] = round(city["main"]["pressure"] / 33.864 , 2)
-    city["sys"]["sunrise"] = datetime.fromtimestamp(int(city["sys"]["sunrise"])).strftime('%H:%M:%S')
-    city["sys"]["sunset"] = datetime.fromtimestamp(int(city["sys"]["sunset"])).strftime('%H:%M:%S')
-
-    # if city == "noRecentCities":
-    #     return redirect("/")
-
-    # session["history"] = str(json.loads(session["history"]).append(city))
+    city = api(cityName)
 
     return render_template("search.html", city=city)
 
@@ -82,14 +86,9 @@ def manifest():
 def browserconfig():
     """Browserconfig"""
     return render_template("browserconfig.xml")
-
-# def init():
-#     if session.get("history") == None:
-#         session["history"] = "[]"
-
-if __name__ == "__main__":
-    app.run()
-
 # @app.route("/.well-known/acme-challenge/OKitNQ-pFR_TSZw-sNbfUIDH6cPWggl_UFt3tMIV8Jw")
 # def acme_challenge():
 #     return render_template("ssl.html")
+
+if __name__ == "__main__":
+    app.run()
