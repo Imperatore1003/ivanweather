@@ -1,0 +1,21 @@
+<div class="weather card border-dark text-center text-bg-light mb-3" style="min-width: 16rem; max-width: 22rem;">
+    <ul class="list-group list-group-flush">
+        <div class="card-header">Weather today in</div>
+        <li class="list-group-item">
+            <h5 class="card-title">{{ city["name"] }}, {{ city["sys"]["country"] }}</h5>
+        </li>
+        <li class="list-group-item">
+            <h6 class="card-subtitle mb-2 text-muted">{{ city["main"]["temp_max"] }}°/{{ city["main"]["temp_min"] }}°</h6>
+            <h3 class="card-title">{{ city["main"]["temp"] }}°</h3>
+            <h6 class="card-subtitle mb-2 text-muted">Feels like {{ city["main"]["feels_like"] }}°</h6>
+            <h5 class="card-title">{{ city["weather"][0]["main"] }}, {{ city["weather"][0]["description"] }}</h5>
+        </li>
+        <li class="list-group-item">
+            <h6 class="card-subtitle mb-2 text-muted">Humidity: {{ city["main"]["humidity"] }}%</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Wind speed: {{ city["wind"]["speed"] }} mph</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Pressure: {{ city["main"]["pressure"] }} in</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Sunrise: {{ city["sys"]["sunrise"] }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Sunset: {{ city["sys"]["sunset"] }}</h6>
+        </li>
+    </ul>
+</div>
