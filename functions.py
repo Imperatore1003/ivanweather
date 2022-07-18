@@ -42,7 +42,7 @@ def api(city, cord1 = 0, cord2 = 0, mode = 0):
 
     # data = str(data.decode("utf-8"))
 
-    # city = json.loads(data)
+    city = json.loads(data)
     city["main"]["pressure"] = round(city["main"]["pressure"] / 33.864 , 2)
     city["sys"]["sunrise"] = datetime.fromtimestamp(int(city["sys"]["sunrise"])).strftime('%H:%M:%S')
     city["sys"]["sunset"] = datetime.fromtimestamp(int(city["sys"]["sunset"])).strftime('%H:%M:%S')
