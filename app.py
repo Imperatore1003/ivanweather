@@ -45,16 +45,16 @@ def index():
     
     elif request.method == "GET":
 
-        # city = api(0, cord1, cord2, 1)
-
         if session.get("cords") is None:
             return render_template("index.html", getCords=1)
         else:
             cords = json.loads(session["cords"].replace("'", '"'))
-            latitudine = cords["latitude"]
-            longitudine = cords["longitude"]
+            latitude = cords["latitude"]
+            longitude = cords["longitude"]
 
-            return render_template("index.html", getCords=0, latitudine=latitudine, longitudine=longitudine)
+            city = api(0, latitude, longitude, 1)
+
+            return render_template("index.html", getCords=0, city=city)
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
