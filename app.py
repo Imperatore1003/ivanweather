@@ -37,8 +37,6 @@ def index():
         output = request.get_json()
         result = str(json.loads(output))
 
-        print(result)
-
         session["cords"] = result
 
         return redirect("/")
@@ -86,6 +84,10 @@ def manifest():
 def browserconfig():
     """Browserconfig"""
     return render_template("browserconfig.xml")
+@app.route("/sw.js")
+def serviceWorker():
+    """Browserconfig"""
+    return render_template("sw.js")
 # @app.route("/.well-known/acme-challenge/OKitNQ-pFR_TSZw-sNbfUIDH6cPWggl_UFt3tMIV8Jw")
 # def acme_challenge():
 #     return render_template("ssl.html")

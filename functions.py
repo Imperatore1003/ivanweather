@@ -1,7 +1,7 @@
 import urllib.parse
 import json
-import http
 from datetime import datetime
+import urllib.request
 import urllib.parse
 
 def recentCities(cities):
@@ -19,32 +19,57 @@ def recentCities(cities):
     
     return [{"name": "No recent cities", "url": "noRecentCities"}]
 
-def api(city, cord1 = 0, cord2 = 0, mode = 0):
+def api(city, cord1 = 0, cord2 = 0, mode = 0, unit = 0):
 
-    data = '{"coord":{"lon":8.3181,"lat":40.5589},"weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01n"}],"base":"stations","main":{"temp":78.89,"feels_like":78.89,"temp_min":78.89,"temp_max":78.89,"pressure":1016,"humidity":89},"visibility":10000,"wind":{"speed":1.14,"deg":0},"clouds":{"all":0},"dt":1658002619,"sys":{"type":1,"id":6717,"country":"IT","sunrise":1657944556,"sunset":1657997751},"timezone":7200,"id":3183284,"name":"Alghero","cod":200}'
+    city = json.loads("{'coord': {'lon': 8.3213, 'lat': 40.5587}, 'weather': [{'id': 800, 'main': 'Clear', 'description': 'clear sky', 'icon': '01n'}], 'base': 'stations', 'main': {'temp': 28.01, 'feels_like': 28.55, 'temp_min': 28.01, 'temp_max': 28.01, 'pressure': 1016, 'humidity': 51}, 'visibility': 10000, 'wind': {'speed': 1.54, 'deg': 80}, 'clouds': {'all': 0}, 'dt': 1658263786, 'sys': {'type': 1, 'id': 6717, 'country': 'IT', 'sunrise': 1658203902, 'sunset': 1658256834}, 'timezone': 7200, 'id': 3183284, 'name': 'Alghero', 'cod': 200}".replace("'", '"'))
 
-    # conn = http.client.HTTPSConnection("community-open-weather-map.p.rapidapi.com")
+    # units = "imperial" if unit == 0 else "metric"
 
-    # headers = {
-    #     'X-RapidAPI-Key': "39a36a1af4msh4c0c2be2d82278cp10e88cjsn79a0c89c3bb9",
-    #     'X-RapidAPI-Host': "community-open-weather-map.p.rapidapi.com"
-    #     }
+    # prefix = ""
+    # preprefix = "https://api.openweathermap.org/data/2.5/weather?"
+    # suffix = "&appid=cfdec8014b5fefbdaeb3c9793299b335"
 
     # if mode == 0:
     #     city = urllib.parse.quote(city)
 
-    #     conn.request("GET", f"/weather?q={city}&lang=en&units=metric", headers=headers)
+    #     prefix = f"q={city}"
     # elif mode == 1:
-    #     conn.request("GET", f"/weather?lat={cord1}&lon={cord2}&lang=en&units=metric", headers=headers)
+    #     prefix = f"lat={cord1}&lon={cord2}"
 
-    # res = conn.getresponse()
-    # data = res.read()
+    # myAPI = preprefix + prefix + f"&lang=en&units={units}" + suffix
+    # myAPI = preprefix + prefix + f"&lang=en&units=metric" + suffix
 
-    # data = str(data.decode("utf-8"))
+    # city = {}
+    # with urllib.request.urlopen(myAPI) as url:
+    #     city = json.loads(url.read().decode())
 
-    city = json.loads(data)
-    city["main"]["pressure"] = round(city["main"]["pressure"] / 33.864 , 2)
-    city["sys"]["sunrise"] = datetime.fromtimestamp(int(city["sys"]["sunrise"])).strftime('%H:%M:%S')
-    city["sys"]["sunset"] = datetime.fromtimestamp(int(city["sys"]["sunset"])).strftime('%H:%M:%S')
+    # print(str(city))
+
+    if unit == 1:
+        city["wind"]["speed"] = round(city["wind"]["speed"] * 3.6, 2) # from m/s to km/h
+        city["dewPoint"] = round(city["main"]["temp"] - ((100 - city["main"]["humidity"]) / 5), 2)
+        city["sys"]["sunrise"] = datetime.fromtimestamp(int(city["sys"]["sunrise"])).strftime('%H:%M:%S')
+        city["sys"]["sunset"] = datetime.fromtimestamp(int(city["sys"]["sunset"])).strftime('%H:%M:%S')
+
+        city["units"] = {"wind": "km/h", "pressure": "hPa"}
+
+    else:
+        temp = city["main"]["temp"]
+        city["dewPoint"] = toFahrenheit(round(temp - ((100 - city["main"]["humidity"]) / 5), 2))
+        city["main"]["temp_max"] = toFahrenheit(city["main"]["temp_max"])
+        city["main"]["temp_min"] = toFahrenheit(city["main"]["temp_min"])
+        city["main"]["feels_like"] = toFahrenheit(city["main"]["feels_like"])
+        city["main"]["temp"] = toFahrenheit(city["main"]["temp"])
+        city["wind"]["speed"] = round(city["wind"]["speed"] * 2.237, 2) # from m/s to mph
+        city["main"]["pressure"] = round(city["main"]["pressure"] / 33.864 , 2) # from hPa to inches of mercury
+        city["sys"]["sunrise"] = datetime.fromtimestamp(int(city["sys"]["sunrise"])).strftime('%I:%M:%S %p')
+        city["sys"]["sunset"] = datetime.fromtimestamp(int(city["sys"]["sunset"])).strftime('%I:%M:%S %p')
+
+        city["units"] = {"wind": "mph", "pressure": "in"}
+
+    # print(str(city))
 
     return city
+
+def toFahrenheit(temp):
+    return round((temp * 9/5) + 32, 2)
