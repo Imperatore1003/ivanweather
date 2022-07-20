@@ -1,5 +1,5 @@
 import re
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, Response
 from flask_session import Session
 from flask_compress import Compress
 from tempfile import mkdtemp
@@ -64,33 +64,49 @@ def search():
 
     return render_template("search.html", city=city)
 
+@app.route("/fallback")
+def fallback():
+    """Fallback page"""
+    return render_template("fallback.html")
+
 @app.route("/google08e23da205bdc745.html")
 def verification():
     """Verify Google Search Console"""
     return render_template("google08e23da205bdc745.html")
+
 @app.route("/robots.txt")
 def robots():
     """robots.txt"""
-    return render_template("robots.txt")
+    file = ""
+    with open('robots.txt') as f:
+        file = f.readlines()
+    return Response(file, mimetype='text/plain')
+
 @app.route("/sitemap.xml")
 def sitemap():
     """Sitemap"""
     return render_template("sitemap.xml")
+
 @app.route("/manifest.json")
 def manifest():
     """Manifest"""
-    return render_template("manifest.json")
+    file = ""
+    with open('manifest.json') as f:
+        file = f.readlines()
+    return Response(file, mimetype='application/json')
+
 @app.route("/browserconfig.xml")
 def browserconfig():
     """Browserconfig"""
     return render_template("browserconfig.xml")
+
 @app.route("/sw.js")
 def serviceWorker():
-    """Browserconfig"""
-    return render_template("sw.js")
-# @app.route("/.well-known/acme-challenge/OKitNQ-pFR_TSZw-sNbfUIDH6cPWggl_UFt3tMIV8Jw")
-# def acme_challenge():
-#     return render_template("ssl.html")
+    """Service Worker"""
+    file = ""
+    with open('sw.js') as f:
+        file = f.readlines()
+    return Response(file, mimetype='application/javascript')
 
 if __name__ == "__main__":
     app.run()
