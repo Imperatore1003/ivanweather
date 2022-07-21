@@ -64,17 +64,17 @@
                                 <!-- <li><a class="dropdown-item" href='/search?city=ciao'>ciao</a></li> -->
                                 <li>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="units" id="flexRadioDefault1" checked>
+                                        <input class="form-check-input" type="radio" name="units" id="flexRadioDefault1" {% if check == 0 %}checked{% endif %}>
                                         <label class="form-check-label" for="flexRadioDefault1">
                                             Fahrenheit
                                         </label>
-                                      </div>
-                                      <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="units" id="flexRadioDefault2">
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="units" id="flexRadioDefault2" {% if check == 1 %}checked{% endif %}>
                                         <label class="form-check-label" for="flexRadioDefault2">
                                             Celsius
                                         </label>
-                                      </div>                                      
+                                    </div>
                                 </li>
                             </ul>
                         </li>
@@ -89,8 +89,11 @@
         </nav>
 
         <main>
+            <h1 style="text-align: center;">Check the weather in your location simply - IvanWeather</h1>
+
             {% block content %}{% endblock %}
         </main>
     </body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script src="/static/main.js"></script>
 </html>

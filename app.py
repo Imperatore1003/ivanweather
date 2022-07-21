@@ -50,9 +50,13 @@ def index():
             latitude = cords["latitude"]
             longitude = cords["longitude"]
 
-            city = api(0, latitude, longitude, 1)
+            if session.get("units") is None:
+                session["units"] = 0
+            check = 0 if int(session["units"]) == 0 else 1
 
-            return render_template("index.html", getCords=0, city=city)
+            city = api(0, latitude, longitude, 1, session["units"])
+
+            return render_template("index.html", getCords=0, city=city, check=check)
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
@@ -60,14 +64,46 @@ def search():
 
     cityName = request.args.get("city")
 
-    city = api(cityName)
+    if session.get("units") is None:
+        session["units"] = 0
+    check = 0 if int(session["units"]) == 0 else 1
 
-    return render_template("search.html", city=city)
+    city = api(cityName, 0, 0, 0, session["units"])
+
+    return render_template("search.html", city=city, check=check)
+
+@app.route("/setUnits", methods=['POST'])
+def units():
+    """Set units"""
+    if request.method == "POST":
+        output = request.get_json()
+        result = json.loads(output)
+
+        # session["units"] = "imperial" if result["units"] == 0 else "metric"
+        session["units"] = int(result["units"])
+
+        return redirect(result["url"])
 
 @app.route("/fallback")
 def fallback():
     """Fallback page"""
     return render_template("fallback.html")
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(403)
+def forbidden_page(e):
+    return render_template('403.html'), 403
+
+@app.errorhandler(410)
+def gone_page(e):
+    return render_template('410.html'), 410
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
 
 @app.route("/google08e23da205bdc745.html")
 def verification():
