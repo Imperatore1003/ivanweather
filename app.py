@@ -1,12 +1,13 @@
 import re
-from flask import Flask, flash, redirect, render_template, request, session, Response
+from flask import Flask, flash, redirect, render_template, request, session, Response, send_from_directory
 from flask_session import Session
 from flask_compress import Compress
 from tempfile import mkdtemp
 
 import json
+import os
 
-from functions import recentCities, api
+from functions import api
 
 app = Flask(__name__)
 Compress(app)
@@ -83,6 +84,11 @@ def units():
         session["units"] = int(result["units"])
 
         return redirect(result["url"])
+
+@app.route('/<path:filename>')
+def download_file(filename):
+    MEDIA_FOLDER = "media"
+    return send_from_directory(MEDIA_FOLDER, filename, as_attachment=False)
 
 @app.route("/fallback")
 def fallback():
