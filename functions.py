@@ -21,27 +21,27 @@ import urllib.parse
 
 def api(cityName, cord1 = 0, cord2 = 0, mode = 0, unit = 0):
 
-    city = json.loads("{'coord': {'lon': 8.3213, 'lat': 40.5587}, 'weather': [{'id': 800, 'main': 'Clear', 'description': 'clear sky', 'icon': '01d'}], 'base': 'stations', 'main': {'temp': 32.01, 'feels_like': 32.85, 'temp_min': 32.01, 'temp_max': 32.01, 'pressure': 1017, 'humidity': 43}, 'visibility': 10000, 'wind': {'speed': 1.54, 'deg': 40}, 'clouds': {'all': 0}, 'dt': 1658480467, 'sys': {'type': 1, 'id': 6717, 'country': 'IT', 'sunrise': 1658463256, 'sunset': 1658515902}, 'timezone': 7200, 'id': 6537821, 'name': 'Alghero', 'cod': 200}".replace("'", '"'))
+    # city = json.loads("{'coord': {'lon': 8.3213, 'lat': 40.5587}, 'weather': [{'id': 800, 'main': 'Clear', 'description': 'clear sky', 'icon': '01d'}], 'base': 'stations', 'main': {'temp': 32.01, 'feels_like': 32.85, 'temp_min': 32.01, 'temp_max': 32.01, 'pressure': 1017, 'humidity': 43}, 'visibility': 10000, 'wind': {'speed': 1.54, 'deg': 40}, 'clouds': {'all': 0}, 'dt': 1658480467, 'sys': {'type': 1, 'id': 6717, 'country': 'IT', 'sunrise': 1658463256, 'sunset': 1658515902}, 'timezone': 7200, 'id': 6537821, 'name': 'Alghero', 'cod': 200}".replace("'", '"'))
 
-    # units = "imperial" if unit == 0 else "metric"
+    units = "imperial" if unit == 0 else "metric"
 
-    # prefix = ""
-    # preprefix = "https://api.openweathermap.org/data/2.5/weather?"
-    # suffix = "&appid=cfdec8014b5fefbdaeb3c9793299b335"
+    prefix = ""
+    preprefix = "https://api.openweathermap.org/data/2.5/weather?"
+    suffix = "&appid=cfdec8014b5fefbdaeb3c9793299b335"
 
-    # if mode == 0:
-    #     cityName = urllib.parse.quote(cityName)
+    if mode == 0:
+        cityName = urllib.parse.quote(cityName)
 
-    #     prefix = f"q={cityName}"
-    # elif mode == 1:
-    #     prefix = f"lat={cord1}&lon={cord2}"
+        prefix = f"q={cityName}"
+    elif mode == 1:
+        prefix = f"lat={cord1}&lon={cord2}"
 
-    # myAPI = preprefix + prefix + f"&lang=en&units={units}" + suffix
-    # myAPI = preprefix + prefix + f"&lang=en&units=metric" + suffix
+    myAPI = preprefix + prefix + f"&lang=en&units={units}" + suffix
+    myAPI = preprefix + prefix + f"&lang=en&units=metric" + suffix
 
-    # city = {}
-    # with urllib.request.urlopen(myAPI) as url:
-    #     city = json.loads(url.read().decode())
+    city = {}
+    with urllib.request.urlopen(myAPI) as url:
+        city = json.loads(url.read().decode())
 
     # print(str(city))
 
