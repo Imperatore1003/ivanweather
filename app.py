@@ -1,11 +1,9 @@
-import re
 from flask import Flask, flash, redirect, render_template, request, session, Response, send_from_directory
 from flask_session import Session
 from flask_compress import Compress
 from tempfile import mkdtemp
 
 import json
-import os
 
 from functions import api
 

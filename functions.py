@@ -1,8 +1,10 @@
 import urllib.parse
-import json
-from datetime import datetime, timezone
 import urllib.request
 import urllib.parse
+
+import os
+import json
+from datetime import datetime
 
 # def recentCities(cities):
 #     """Returns a list of recent cities"""
@@ -23,11 +25,13 @@ def api(cityName, cord1 = 0, cord2 = 0, mode = 0, unit = 0):
 
     # city = json.loads("{'coord': {'lon': 8.3213, 'lat': 40.5587}, 'weather': [{'id': 800, 'main': 'Clear', 'description': 'clear sky', 'icon': '01d'}], 'base': 'stations', 'main': {'temp': 32.01, 'feels_like': 32.85, 'temp_min': 32.01, 'temp_max': 32.01, 'pressure': 1017, 'humidity': 43}, 'visibility': 10000, 'wind': {'speed': 1.54, 'deg': 40}, 'clouds': {'all': 0}, 'dt': 1658480467, 'sys': {'type': 1, 'id': 6717, 'country': 'IT', 'sunrise': 1658463256, 'sunset': 1658515902}, 'timezone': 7200, 'id': 6537821, 'name': 'Alghero', 'cod': 200}".replace("'", '"'))
 
+    api = os.environ.get("WEATHER_API")
+    
     units = "imperial" if unit == 0 else "metric"
 
     prefix = ""
     preprefix = "https://api.openweathermap.org/data/2.5/weather?"
-    suffix = "&appid=cfdec8014b5fefbdaeb3c9793299b335"
+    suffix = "&appid=" + api
 
     if mode == 0:
         cityName = urllib.parse.quote(cityName)
@@ -71,7 +75,7 @@ def api(cityName, cord1 = 0, cord2 = 0, mode = 0, unit = 0):
 
         city["units"] = {"wind": "mph", "pressure": "in", "visibility": "mi"}
 
-    print(str(city))
+    # print(str(city))
     # print(f"{cord1} {cord2}")
 
     return city
