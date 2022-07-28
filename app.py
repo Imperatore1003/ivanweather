@@ -44,8 +44,10 @@ def index():
     
     elif request.method == "GET":
 
+        ranNum = int(random() * 10000)
+
         if session.get("cords") is None:
-            return render_template("index.html", getCords=1)
+            return render_template("index.html", getCords=1, ranNum=ranNum)
         else:
             cords = json.loads(session["cords"].replace("'", '"'))
             latitude = cords["latitude"]
@@ -57,7 +59,6 @@ def index():
 
             city = api(0, latitude, longitude, 1, session["units"])
 
-            ranNum = int(random() * 10000)
 
             return render_template("index.html", getCords=0, city=city, check=check, ranNum=ranNum)
 
