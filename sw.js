@@ -145,6 +145,7 @@ self.addEventListener('fetch', evt => {
         //     return cacheRes || fetch(evt.request)
         // })
 
+
         //     return cacheRes || fetch(evt.request).then(fetchRes => {
         //         return caches.open(dynamicCacheName).then(cache => {
         //             cache.put(evt.request.url, fetchRes.clone());
@@ -153,6 +154,7 @@ self.addEventListener('fetch', evt => {
         //     });
         // })
 
+        
             return cacheRes || fetch(evt.request)
         }).catch(() => caches.match('/fallback'))
 
