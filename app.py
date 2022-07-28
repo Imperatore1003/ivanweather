@@ -2,7 +2,6 @@ from random import random
 from flask import Flask, flash, redirect, render_template, request, session, Response, send_from_directory
 from flask_session import Session
 from flask_compress import Compress
-from flask_sslify import SSLify
 from tempfile import mkdtemp
 
 import json
@@ -16,7 +15,6 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
-sslify = SSLify(app, permanent=True)
 
 @app.after_request
 def after_request(response):
