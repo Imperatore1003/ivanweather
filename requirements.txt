@@ -2,5 +2,5 @@ Flask
 gunicorn
 Flask-Session
 Flask-Compress
+Flask_sslify
 requests
-Waitress
