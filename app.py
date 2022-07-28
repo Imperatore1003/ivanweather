@@ -1,9 +1,11 @@
+from random import random
 from flask import Flask, flash, redirect, render_template, request, session, Response, send_from_directory
 from flask_session import Session
 from flask_compress import Compress
 from tempfile import mkdtemp
 
 import json
+from random import random
 
 from functions import api
 
@@ -55,7 +57,9 @@ def index():
 
             city = api(0, latitude, longitude, 1, session["units"])
 
-            return render_template("index.html", getCords=0, city=city, check=check)
+            ranNum = int(random() * 10000)
+
+            return render_template("index.html", getCords=0, city=city, check=check, ranNum=ranNum)
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
