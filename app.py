@@ -16,12 +16,12 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# @app.before_request
-# def before_request():
-#     if not request.is_secure:
-#         url = request.url.replace('http://', 'https://', 1)
-#         code = 301
-#         return redirect(url, code=code)
+@app.before_request
+def before_request():
+    if not request.is_secure:
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
 
 @app.after_request
 def after_request(response):
@@ -44,7 +44,8 @@ def index():
     
     elif request.method == "GET":
 
-        ranNum = int(random() * 10000)
+        ranNum = ""
+        # ranNum = " - " + int(random() * 10000)
 
         if session.get("cords") is None:
             return render_template("index.html", getCords=1, ranNum=ranNum)
