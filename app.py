@@ -24,6 +24,13 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
+@app.before_request
+def before_request():
+    if request.url != None and "ivanweather.herokuapp.com" in request.url:
+        url = request.url.replace('ivanweather.herokuapp.com', 'ivanweather.com')
+        code = 301
+        return redirect(url, code=code)
+
 @app.route("/", methods=['GET', 'POST'])
 def index():
     """Show the homepage of IvanWeather"""
