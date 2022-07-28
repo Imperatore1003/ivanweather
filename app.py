@@ -114,6 +114,11 @@ def verification():
     """Verify Google Search Console"""
     return render_template("google08e23da205bdc745.html")
 
+@app.route("/.well-known/acme-challenge/DXBAoCp54ZmucFSSbB3YknNsgMhKxRIjUEyqWQmxjjU")
+def ssl():
+    """Let's Encrypt"""
+    return render_template("ssl.html")
+
 @app.route("/robots.txt")
 def robots():
     """robots.txt"""
