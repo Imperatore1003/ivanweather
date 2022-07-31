@@ -1,4 +1,4 @@
-# IvanWeather
+ll# IvanWeather
 ## Video Demo: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 ## Site: [ivanweather.com](https://ivanweather.com)
 ## Description:
@@ -25,10 +25,10 @@ There are other files that are needed to run the site:
 #### [`templates folder`](/templates/)
 The template folders contain all the HTML files of the site:
 - [`index.html`](/templates/index.html)
-    - This file contains the javascript code to get the coordinates of the client from the browser.
+    - This file contains the javascript code for getting the coordinates of the client from the browser.
 - [`search.html`](/templates/search.html);
 - [`layout.html`](/templates/layout.html)
-    - This file contains the tag head and the top bar HTML code and includes two javascript files.
+    - This file contains the head tag and the top bar HTML code and includes two javascript files.
 - [`fallback.html`](/templates/fallback.html)
     - This file is loaded by the service worker when there is no connection.
 - [`404 error code`](/templates/404.html)
@@ -38,7 +38,7 @@ The template folders contain all the HTML files of the site:
         - [`410`](/templates/410.html)
         - [`500`](/templates/500.html)
 - [`weatherCard.html`](/templates/weatherCard.html)
-    - This file is only a placeholder that can be included for displaying the weather information of a city.
+    - This file is only a layout page that can be included for displaying nicely the weather information of a city.
 
 #### [`static folder`](/static/)
 The static folder contains nondynamic files such as images and more:
@@ -66,10 +66,10 @@ The static folder contains nondynamic files such as images and more:
 - This is another file used by [Heroku](https://heroku.com), where are declared the python libraries used for this project.
 
 #### [`robots.txt`](/robots.txt)
-- This file is used by the web crawler which is declared the folders that cannot be accessed.
+- This file is used by the web crawlers in which are declared the folders that cannot be accessed.
 
 #### [`sw.js`](/sw.js)
-- This file is the service worker where it caches files so they can be accessed offline.
+- This file is the service worker used to cache files so they can be accessed offline.
 
 #### [`TODO`](/TODO)
 - In this file I wrote all the ideas to develop for this project.
