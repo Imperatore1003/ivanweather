@@ -54,7 +54,7 @@ The static folder contains nondynamic files such as images and more:
         - Ms icons
 
 - [`media folder`](/media/)
-    - It contains the files that need to be in the root directory.
+    - It contains the files that are needed to be in the root directory.
 
 #### [`manifest.json`](/manifest.json)
 - It is a file required to create a [PWA](https://it.wikipedia.org/wiki/Progressive_Web_App) (Progressive Web App) and declares some site's settings.

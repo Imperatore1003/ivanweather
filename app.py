@@ -84,7 +84,6 @@ def units():
         output = request.get_json()
         result = json.loads(output)
 
-        # session["units"] = "imperial" if result["units"] == 0 else "metric"
         session["units"] = int(result["units"])
 
         return redirect(result["url"])
