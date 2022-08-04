@@ -90,7 +90,7 @@ def units():
 
 @app.route('/<path:filename>')
 def download_file(filename):
-    MEDIA_FOLDER = "media"
+    MEDIA_FOLDER = "static/media"
     return send_from_directory(MEDIA_FOLDER, filename, as_attachment=False)
 
 @app.route("/fallback")
